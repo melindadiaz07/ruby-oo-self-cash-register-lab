@@ -1,20 +1,32 @@
 
+
 class CashRegister
+
+   
+    attr_accessor :discount, :total, :quantity
 
      def initialize(discount = 0)
         @total = 0
         @discount = discount
+        @all_items = []
+        @prices_array = []
+        @quantity_array = []
      end
 
-     attr_accessor :discount, :total, :quantity, 
-
-     def total
-        return @total 
-     end
+    
 
      def add_item(title, price, quantity=1)
-        @total = @total + (price * quantity)
-       
+        @total += (price * quantity)
+       @title = title
+      quantity.times do 
+         @all_items << title
+      end
+      quantity.times do 
+         @prices_array << price
+      end
+      @quantity_array << quantity
+
+
      end
 
      def apply_discount
@@ -25,12 +37,22 @@ class CashRegister
         return "After the discount, the total comes to $#{@total}."
      end
 
-     def items 
-        items_array = []
-        
-        return items_array
+     def items
+        @all_items
      end
+     
 
+
+        def void_last_transaction
+         @quantity_array[-1].times do 
+            @total -= @prices_array[-1]
+            @all_items.pop()
+         end
+            if @all_items == []
+               return @total = 0.0
+            end
+            
+        end
 
 
 end
